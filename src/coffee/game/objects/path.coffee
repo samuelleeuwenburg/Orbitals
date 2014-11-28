@@ -24,13 +24,30 @@ class Path
             { row: 8, col: 12, end: true }
         ]
 
-    
         @color = new Color 0, 200, 160, 0.3
 
-        # get all rectangles from the grid
         @pathTiles = []
+        @startTile = false
+        @endTile = false
+
+        # get all rectangles from the grid
         for coord in @coordinates
-            @pathTiles.push grid.getTile(coord.row, coord.col)
+            tile = grid.getTile(coord.row, coord.col)
+
+            @pathTiles.push tile
+
+            if coord.start
+                @startTile = tile
+
+            if coord.end
+                @endTile = tile
+
+
+    getStart: ->
+        return @startTile
+
+    getEnd: ->
+        return @endTile
 
     render: (graphics) ->
 

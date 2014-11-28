@@ -48,16 +48,16 @@ class Satellite
 
 
     update: ->
-        if @rect.x + @rect.w / 2 < @parent.rect.x + @parent.rect.w / 2
+        if @rect.getCenterX() < @parent.rect.getCenterX()
             @xSpeed += @speed
 
-        if @rect.x + @rect.w / 2 > @parent.rect.x + @parent.rect.w / 2
+        if @rect.getCenterX() > @parent.rect.getCenterX()
             @xSpeed -= @speed
 
-        if @rect.y + @rect.h / 2 < @parent.rect.y + @parent.rect.h / 2
+        if @rect.getCenterY() < @parent.rect.getCenterY()
             @ySpeed += @speed
 
-        if @rect.y + @rect.h / 2 > @parent.rect.y + @parent.rect.h / 2
+        if @rect.getCenterY() > @parent.rect.getCenterY()
             @ySpeed -= @speed
 
         @rect.x += @xSpeed

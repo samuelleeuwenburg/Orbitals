@@ -5,6 +5,12 @@ class Rectangle
         @w = w
         @h = h
 
+    getCenterX: ->
+        return @x + @w / 2
+
+    getCenterY: ->
+        return @y + @h / 2
+
     intersects: (r) ->
         r.x < @x + @w and
         r.y < @y + @h and

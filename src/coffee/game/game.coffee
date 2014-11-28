@@ -8,6 +8,8 @@ class Game
 
         @path = new Path @grid
 
+        @creep = new Creep @path
+
         @pillars = []
         
     update: ->
@@ -30,6 +32,8 @@ class Game
         for pillar in @pillars
             pillar.update @inputHandler
 
+        @creep.update()
+
     render: ->
         @graphics.clear()
 
@@ -39,5 +43,7 @@ class Game
             pillar.render @graphics
 
         @grid.render @graphics
+
+        @creep.render @graphics
 
 
