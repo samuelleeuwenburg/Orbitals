@@ -16,7 +16,6 @@ mainLoop = ->
     game.update()
     game.render()
 
-
 document.addEventListener 'DOMContentLoaded', ->
     init()
     mainLoop()

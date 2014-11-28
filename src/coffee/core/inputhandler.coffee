@@ -16,7 +16,6 @@ class InputHandler
             @keys[event.keyCode] = false
 
         window.addEventListener 'mousedown', (event) =>
-
             if event.target != @canvas
                 return false
 
@@ -34,6 +33,7 @@ class InputHandler
             @mouseCoords.y = event.clientY - @canvas.offsetTop
 
     update: ->
+        # detect single mouse click
         if @mouseState != -1
             if @mouseReset
                 @mouseState = -2
