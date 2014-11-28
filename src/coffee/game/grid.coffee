@@ -6,7 +6,7 @@ class Grid
         @x = x
         @y = y
 
-        @tileSize = 40
+        @tileSize = 32
 
         @tiles = []
 
@@ -27,6 +27,9 @@ class Grid
                 tile = @tiles[row][col]
                 tile.rect.y = tile.rect.h * row
                 tile.rect.x = tile.rect.w * col
+
+    getTile: (row, col) ->
+        return @tiles[row][col]
 
     getAllTiles: ->
     

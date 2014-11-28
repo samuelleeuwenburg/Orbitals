@@ -1,7 +1,7 @@
 class Satellite
     constructor: (parent, x = 0, y = 0, speed = 0.2) ->
 
-        @size = 2
+        @size = 4
         @maxSize = @size * 4
 
         @rect = new Rectangle x, y, @size, @size

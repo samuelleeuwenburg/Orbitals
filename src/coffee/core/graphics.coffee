@@ -13,7 +13,7 @@ class Graphics
     drawCircle: (rect, color) ->
         centerX = rect.x + rect.w / 2
         centerY = rect.y + rect.h / 2
-        radius = (rect.w + rect.h) / 2
+        radius = (rect.w + rect.h) / 4
 
         @context.beginPath()
         @context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false)
