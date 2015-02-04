@@ -16,6 +16,18 @@ class Rectangle {
     ];
   }
 
+  get position() {
+    return {
+      x: this.x,
+      y: this.y
+    };
+  }
+
+  set position(pos) {
+    this.x = pos.x;
+    this.y = pos.y;
+  }
+
   intersects(rect) {
     return (rect.x < this.x + this.w &&
             rect.y < this.y + this.h &&
