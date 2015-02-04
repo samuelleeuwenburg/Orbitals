@@ -132,11 +132,76 @@ var _prototypeProperties = function (child, staticProps, instanceProps) { if (st
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
+var InputHandler = (function () {
+  function InputHandler() {
+    var _this = this;
+    _classCallCheck(this, InputHandler);
+
+    this.keys = {};
+
+    this.mouseState = -1;
+    this.mouseReset = true;
+    this.mouseCoords = new Rectangle(0, 0, 1, 1);
+
+    this.canvas = document.getElementById("main-canvas");
+
+    window.addEventListener("keydown", function (event) {
+      _this.keys[event.keyCode] = true;
+    });
+    window.addEventListener("keyup", function (event) {
+      _this.keys[event.keyCode] = false;
+    });
+
+    window.addEventListener("mousedown", function (event) {
+      if (event.target !== _this.canvas) {
+        return false;
+      }
+
+      _this.mouseState = event.button;
+    });
+
+
+    document.onmousemove = function (event) {
+      if (event.target !== _this.canvas) {
+        return false;
+      }
+
+      _this.mouseCoords.x = event.clientX - _this.canvas.offsetLeft;
+      _this.mouseCoords.y = event.clientY - _this.canvas.offsetTop;
+    };
+  }
+
+  _prototypeProperties(InputHandler, null, {
+    update: {
+      value: function update() {
+        // detect single mouse click
+        if (this.mouseState !== -1) {
+          if (this.mouseReset) {
+            this.mouseState = -2;
+          } else {
+            this.mouseReset = true;
+          }
+        }
+      },
+      writable: true,
+      configurable: true
+    }
+  });
+
+  return InputHandler;
+})();
+"use strict";
+
+var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
 var MainLoop = (function () {
   function MainLoop() {
     _classCallCheck(this, MainLoop);
 
     this.graphics = new Graphics();
+    this.inputHandler = new InputHandler();
 
     this.r = new Rectangle();
     this.c = new Color();
@@ -144,7 +209,13 @@ var MainLoop = (function () {
 
   _prototypeProperties(MainLoop, null, {
     update: {
-      value: function update() {},
+      value: function update() {
+        if (this.inputHandler.mouseState === 0) {
+          console.log("click!");
+        }
+
+        this.inputHandler.update();
+      },
       writable: true,
       configurable: true
     },
