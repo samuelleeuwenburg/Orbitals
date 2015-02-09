@@ -28,6 +28,13 @@ class Rectangle {
     this.y = pos.y;
   }
 
+  get center() {
+    return [
+      this.x + this.w / 2,
+      this.y + this.h / 2
+    ];
+  }
+
   intersects(rect) {
     return (rect.x < this.x + this.w &&
             rect.y < this.y + this.h &&

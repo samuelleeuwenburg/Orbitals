@@ -14,4 +14,15 @@ class Graphics {
     this.context.fillRect(...rect.dimensions);
   }
 
+  drawCircle(rect, color) {
+    this.context.beginPath();
+    this.context.arc(...rect.center, rect.w / 2, 0, 2 * Math.PI, false);
+    this.context.fillStyle = color.rgba;
+    this.context.fill();
+  }
+
+  drawImage(rect, image) {
+    this.context.drawImage(image, ...rect.dimensions);
+  }
+
 }
