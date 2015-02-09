@@ -1,7 +1,9 @@
 class InputHandler {
 
   constructor() {
-    this.keys = {};
+
+    this.curKeys = new Map();
+    this.prevKeys = new Map();
 
     this.mouseState = -1;
     this.mouseReset = true;
@@ -10,10 +12,10 @@ class InputHandler {
     this.canvas = document.getElementById('main-canvas');
 
     window.addEventListener('keydown', event => {
-      this.keys[event.keyCode] = true;
+      this.curKeys.set(event.keyCode, true);
     });
     window.addEventListener('keyup', event => {
-      this.keys[event.keyCode] = false;
+      this.curKeys.set(event.keyCode, false);
     });
 
     window.addEventListener('mousedown', event => {
@@ -35,7 +37,24 @@ class InputHandler {
     };
   }
 
+	isKeyDown(key) {
+		return this.curKeys.get(key) || false;
+	}
+	isKeyUp(key) {
+		return !this.curKeys.get(key) || false;
+	}
+	isKeyPressed(key) {
+		return (this.curKeys.get(key) && !this.prevKeys.get(key)) || false;
+	}
+	isKeyReleased(key) {
+		return (!this.curKeys.get(key) && this.prevKeys.get(key)) || false;
+	}
+
   update() {
+
+    for (let key of this.curKeys) {
+      this.prevKeys.set(key[0], key[1]);
+    }
 
     // detect single mouse click
     if (this.mouseState !== -1) {
@@ -45,7 +64,8 @@ class InputHandler {
         this.mouseReset = true;
       }
     }
-
   }
+
+	
 
 }
