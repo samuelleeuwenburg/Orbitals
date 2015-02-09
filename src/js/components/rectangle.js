@@ -35,11 +35,24 @@ class Rectangle {
     ];
   }
 
+  get left() { 
+    return this.x; 
+  }
+  get right() { 
+    return this.x + this.w; 
+  }
+  get top() { 
+    return this.y;
+  }
+  get bottom() { 
+    return this.y + this.h; 
+  }
+
   intersects(rect) {
-    return (rect.x < this.x + this.w &&
-            rect.y < this.y + this.h &&
-            this.x < rect.x + rect.w &&
-            this.y < rect.y + rect.h);
+    return (rect.left < this.right &&
+            rect.top < this.bottom &&
+            this.left < rect.right &&
+            this.top < rect.bottom);
   } 
 
 }
