@@ -26,6 +26,7 @@ class AppLoop extends MainLoop {
     this.audio.promise.then(() => {
       
       for (let i = 0; i < this.audio.freqsChan1.length; i++) {
+
         let average = (this.audio.freqsChan1[i] + this.audio.freqsChan2[i]) / 2;
         this.freqOrbs[i].update(average);
       }
