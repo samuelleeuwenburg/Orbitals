@@ -2,52 +2,35 @@ class AppLoop extends MainLoop {
   constructor() {
     super();
 
-    this.rect = new Rectangle();
+    this.audio = new AudioAsset('/audio/autumn-leaves.mp3');
 
-    this.velocity = 0.9;
-    this.speed = 1;
+    this.audio.promise.then(() => {
+      this.audio.play();
 
-    this.speedX = 0;
-    this.speedY = 0;
+      this.origin = new Rectangle(300, 400, 10, 3);
+
+      this.origin.x = this.graphics.canvas.width / 2;
+      this.origin.y = this.graphics.canvas.height / 2;
+
+      this.freqOrbs = [];
+
+      for (let i = 0; i < this.audio.freqsChan1.length; i++) {
+        this.freqOrbs.push(new Orb(this.origin, i));
+      }
+      
+    });
   }
 
   update() {
 
-    if (this.inputHandler.isKeyDown(65)) {
-      this.speedX -= this.speed;
-    }
+    this.audio.promise.then(() => {
+      
+      for (let i = 0; i < this.audio.freqsChan1.length; i++) {
+        let average = (this.audio.freqsChan1[i] + this.audio.freqsChan2[i]) / 2;
+        this.freqOrbs[i].update(average);
+      }
 
-    if (this.inputHandler.isKeyDown(68)) {
-      this.speedX += this.speed;
-    }
-
-    if (this.inputHandler.isKeyDown(87)) {
-      this.speedY -= this.speed;
-    }
-
-    if (this.inputHandler.isKeyDown(83)) {
-      this.speedY += this.speed;
-    }
-
-    this.speedX *= this.velocity;
-    this.speedY *= this.velocity;
-
-    this.rect.x += this.speedX;
-    this.rect.y += this.speedY;
-
-    
-    if (this.rect.x > this.graphics.canvas.width ||
-        this.rect.x < 0) {
-
-      this.speedX *= -1;
-      this.rect.x += this.speedX;
-    }
-    if (this.rect.y > this.graphics.canvas.height ||
-        this.rect.y < 0) {
-
-      this.speedY *= -1;
-      this.rect.y += this.speedY;
-    }
+    });
 
     super.update();
   }
@@ -55,6 +38,13 @@ class AppLoop extends MainLoop {
   render() {
     super.render();
 
-    this.graphics.drawCircle(this.rect);
+    this.audio.promise.then(() => {
+
+      for (let i = 0; i < this.audio.freqsChan1.length; i++) {
+        this.freqOrbs[i].draw(this.graphics);
+      }
+
+    });
+
   }
 }
